@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee  
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>ssm-framework</display-name>
+
+    <!-- 添加其它xml配置 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:spring/spring-base.xml,classpath*:spring/spring-mybatis.xml</param-value>
+    </context-param>
+    <!-- spring的ApplicationContext 载入：spring的监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- 防止spring内存溢出监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <!-- 加载spring mvc的配置文件 -->
+    <servlet>
+        <servlet-name>spring-mvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 默认：[servlet-name]-servlet.xml -->
+        <!-- 通过初始化参数，指定xml文件的位置 -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:spring/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>spring-mvc</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!-- 解决bootstrap glyphicon图标不显示问题 start-->
+    <servlet-mapping>
+        <servlet-name>spring-mvc</servlet-name>
+        <url-pattern>*.woff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>spring-mvc</servlet-name>
+        <url-pattern>*.woff2</url-pattern>
+    </servlet-mapping>
+    <!-- 解决bootstrap glyphicon图标不显示问题 end-->
+    <servlet-mapping>
+        <servlet-name>spring-mvc</servlet-name>
+        <url-pattern>*.ico</url-pattern>
+    </servlet-mapping>
+
+    <!-- 日志组件logback -->
+    <context-param>
+        <param-name>logbackConfigLocation</param-name>
+        <param-value>classpath:logback.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+    </listener>
+
+    <!-- 字符过滤 -->
+    <filter>
+        <description>字符集过滤器</description>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <description>字符集编码</description>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- 配置session -->
+    <session-config>
+        <!-- 30分钟 -->
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <!-- http-only:true-确保cookie不能被客户端脚本访问 -->
+            <http-only>true</http-only>
+            <!-- 防止信息泄露，在https中传输启用 -->
+            <secure>false</secure>
+        </cookie-config>
+        <!-- Servlet3.0规范中的<tracking-mode>允许你定义JSESSIONID是存储在cookie中还是URL参数中 -->
+        <!--<tracking-mode>COOKIE</tracking-mode>-->
+    </session-config>
+
+</web-app>
