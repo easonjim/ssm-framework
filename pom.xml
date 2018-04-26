@@ -70,7 +70,7 @@
         <maven-war-plugin.version>2.4</maven-war-plugin.version>
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
-        <jetty-maven-plugin.version>9.4.3.v20170317</jetty-maven-plugin.version>
+        <jetty-maven-plugin.version>9.4.6.v20170531</jetty-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -100,9 +100,18 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!-- 测试 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- 含支持UI模版（Velocity，FreeMarker，JasperReports），邮件服务，脚本服务(JRuby)，缓存Cache（EHCache）， 
+            任务计划Scheduling（uartz）方面的类。外部依赖spring-context, (spring-jdbc, Velocity, FreeMarker, 
+            JasperReports, BSH, Groovy, JRuby, Quartz, EHCache) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <!-- spring核心依赖 end -->
@@ -236,6 +245,20 @@
         </dependency>
         <!-- 文件上传 end -->
 
+        <!-- 实体类自动get/set -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.18</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- AOP -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.7.1</version>
+        </dependency>
     </dependencies>
 
     <build>

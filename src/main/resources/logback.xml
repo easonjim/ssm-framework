@@ -2,6 +2,17 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
+    <!-- 控制台输出，生产级别需要去除 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n
+            </Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 文件输出 -->
     <appender name="daily" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
@@ -10,14 +21,37 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n
             </Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
 
+    <appender name="servicelog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <FileNamePattern>/usr/local/wwwweb/log/ssm-framework-service.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n
+            </Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- additivity为true时向上传递，生产级别必须设置成false-->
+    <logger name="com.jsoft.framework.ssm.service" level="info" additivity="false">
+        <appender-ref ref="servicelog"/>
+        <appender-ref ref="stdout"/>
+    </logger>
+
     <root level="info">
         <appender-ref ref="daily"/>
+        <appender-ref ref="stdout"/>
     </root>
 
 </configuration>
