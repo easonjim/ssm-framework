@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.jsoft.framework.ssm.dao.UserMapper">
+<mapper namespace="com.jsoft.framework.ssm.dao.sys.user.UserMapper">
     <!-- 为了返回List类型而定义的resultMap -->
-    <resultMap type="UserDO" id="resultListUser">
+    <resultMap type="com.jsoft.framework.ssm.model.sys.user.UserDO" id="resultListUser">
         <id column="id" property="id" javaType="Long" jdbcType="BIGINT"/>
         <result column="user_name" property="userName" javaType="String" jdbcType="VARCHAR"/>
         <result column="user_phone" property="userPhone" javaType="String" jdbcType="VARCHAR"/>
@@ -16,23 +16,51 @@
         <result column="is_delete" property="isDelete" javaType="Short" jdbcType="TINYINT"/>
     </resultMap>
     <!-- 返回单个实体 -->
-    <select id="getUser" parameterType="Long" resultType="UserDO">
+    <select id="getUser" parameterType="Long" resultType="com.jsoft.framework.ssm.model.sys.user.UserDO">
         select * from sys_user where id = #{id,jdbcType=BIGINT}
     </select>
     <!-- 返回List的select语句，注意：resultMap的值是指向前面定义好的 -->
-    <select id="listUser" parameterType="string" resultMap="resultListUser">
+    <select id="listUser" parameterType="String" resultMap="resultListUser">
         select * from sys_user
     </select>
     <!--执行增加操作的SQL语句。id和parameterType分别与接口中的saveUser方法的名字和参数类型一致。以#{userName}的形式引用User参数 
         的userName属性，MyBatis将使用反射读取User参数 的此属性。#{userName}中userName大小写敏感。useGeneratedKeys设置 
         为"true"表明要MyBatis获取由数据库自动生成的主 键；keyProperty="id"指定把获取到的主键值注入 到User的id属性 -->
-    <insert id="saveUser" parameterType="UserDO" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveUser" parameterType="com.jsoft.framework.ssm.model.sys.user.UserDO" useGeneratedKeys="true" keyProperty="id">
         insert into sys_user(id, user_name, user_phone, user_email, user_pwd, user_sex, create_time, modify_time, is_delete) values(#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, #{userSex,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT})
     </insert>
-    <update id="updateUser" parameterType="UserDO">
+    <update id="updateUser" parameterType="com.jsoft.framework.ssm.model.sys.user.UserDO">
         update sys_user set user_name = #{userName,jdbcType=VARCHAR}, user_phone = #{userPhone,jdbcType=VARCHAR}, user_email = #{userEmail,jdbcType=VARCHAR}, user_pwd = #{userPwd,jdbcType=VARCHAR}, user_sex = #{userSex,jdbcType=TINYINT}, create_time = #{createTime,jdbcType=TIMESTAMP}, modify_time = #{modifyTime,jdbcType=TIMESTAMP}, is_delete = #{isDelete,jdbcType=TINYINT} where id=#{id,jdbcType=BIGINT}
     </update>
     <delete id="removeUser" parameterType="Long">
         delete from sys_user where id=#{id,jdbcType=BIGINT}
     </delete>
+    <select id="listUserByPage" parameterType="String" resultType="com.jsoft.framework.ssm.model.sys.user.UserDO">
+        select * from sys_user
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name like #{userName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="listUserByPage2" parameterType="String" resultType="com.jsoft.framework.ssm.model.sys.user.UserDO">
+        select * from sys_user
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name like #{userName,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by create_time desc
+        <if test="pageNum != null and pageSize != null">
+            limit #{pageNum},#{pageSize}
+        </if>
+    </select>
+    <select id="countUserByPage2" parameterType="String" resultType="Integer">
+        select count(*) from sys_user
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name like #{userName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>
