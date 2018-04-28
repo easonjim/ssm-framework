@@ -2,6 +2,7 @@ package com.jsoft.framework.ssm.service.impl.sys.user;
 
 import java.util.List;
 
+import com.github.pagehelper.PageHelper;
 import com.jsoft.framework.ssm.dao.sys.user.UserMapper;
 import com.jsoft.framework.ssm.model.sys.user.UserDO;
 import com.jsoft.framework.ssm.service.sys.user.UserService;
@@ -121,5 +122,21 @@ public class UserServiceImpl implements UserService {
     public Integer countUserByPage2(String userName) {
         log.info("调用Service方法：{},userName:{}", "UserServiceImpl#countUserByPage2", userName);
         return userMapper.countUserByPage2(userName);
+    }
+
+    /**
+     * 分页查询，使用PageHelper进行分页，count信息放在PageInfo中
+     *
+     * @param userName 用户名
+     * @param pageNum  第几条，从1开始
+     * @param pageSize 一次返回多少条
+     * @param orderBy  排序字段，动态输入
+     * @return List#UserDO
+     */
+    @Override
+    public List<UserDO> listUserByPage3(String userName, int pageNum, int pageSize, String orderBy) {
+        log.info("调用Service方法：{},userName:{}", "UserServiceImpl#listUserByPage3", userName);
+        PageHelper.startPage(pageNum, pageSize, orderBy);
+        return userMapper.listUserByPage3(userName);
     }
 }

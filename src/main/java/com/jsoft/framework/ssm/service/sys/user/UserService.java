@@ -79,4 +79,15 @@ public interface UserService {
      * @return Integer#count
      */
     Integer countUserByPage2(String userName);
+
+    /**
+     * 分页查询，使用PageHelper进行分页，count信息放在PageInfo中
+     *
+     * @param userName 用户名
+     * @param pageNum  第几条，从1开始
+     * @param pageSize 一次返回多少条
+     * @param orderBy  排序字段，动态输入
+     * @return List#UserDO
+     */
+    List<UserDO> listUserByPage3(String userName, int pageNum, int pageSize, String orderBy);
 }

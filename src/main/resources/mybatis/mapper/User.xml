@@ -63,4 +63,12 @@
             </if>
         </where>
     </select>
+    <select id="listUserByPage3" parameterType="String" resultType="com.jsoft.framework.ssm.model.sys.user.UserDO">
+        select * from sys_user
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name like #{userName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>

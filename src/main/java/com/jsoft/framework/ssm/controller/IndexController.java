@@ -78,7 +78,9 @@ public class IndexController {
             List<UserDO> userDOS = userService.listUserByPage2("%ji%", 0, 10);
             Integer countUserByPage2 = userService.countUserByPage2("%ji%");
             logger.info("分页获取：{}", countUserByPage2);
-            
+            List<UserDO> userDOS2 = userService.listUserByPage3("%ji%", 0, 10, "create_time desc");
+            PageInfo pageInfo2 = new PageInfo(userDOS2);
+            logger.info("分页获取：{}", pageInfo2.getPageSize());
         } catch (Exception ex) {
             logger.info("有异常：", ex);
         }

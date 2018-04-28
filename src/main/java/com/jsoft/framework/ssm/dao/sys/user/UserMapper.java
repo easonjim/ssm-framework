@@ -84,6 +84,14 @@ public interface UserMapper {
      */
     Integer countUserByPage2(@Param("userName") String userName);
     
+    /**
+     * 分页查询，使用PageHelper进行分页，count信息放在PageInfo中
+     *
+     * @param userName 用户名
+     * @return List#UserDO
+     */
+    List<UserDO> listUserByPage3(@Param("userName") String userName);
+
     //==========基于注解==========
     
     
