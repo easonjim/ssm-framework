@@ -107,7 +107,7 @@
             <version>${spring.version}</version>
         </dependency>
         <!-- 含支持UI模版（Velocity，FreeMarker，JasperReports），邮件服务，脚本服务(JRuby)，缓存Cache（EHCache）， 
-            任务计划Scheduling（uartz）方面的类。外部依赖spring-context, (spring-jdbc, Velocity, FreeMarker, 
+            任务计划Scheduling（quartz）方面的类。外部依赖spring-context, (spring-jdbc, Velocity, FreeMarker, 
             JasperReports, BSH, Groovy, JRuby, Quartz, EHCache) -->
         <dependency>
             <groupId>org.springframework</groupId>
