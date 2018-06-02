@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd 
+                           http://www.springframework.org/schema/task 
+                           http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- 配置包扫描 -->
+    <context:component-scan base-package="com.jsoft.framework.ssm.task" />
+    <context:annotation-config/>
+
+    <!-- 配置任务执行器，注意：此处定义了线程池进行处理，因此所有的任务在指定的时间内都是异步的，如果要做成同步的，则把线程池去掉 -->
+    <task:executor id="executor" keep-alive="7200" pool-size="100-200" queue-capacity="500" rejection-policy="CALLER_RUNS" />
+    <task:scheduler id="scheduler" pool-size="20" />
+    <!-- 这里配置注解@Schedule -->
+    <task:annotation-driven executor="executor" scheduler="scheduler" />
+    <!-- 这里采用XML配置方式定义，注意：此处对于定时时间的配置会被注解中的时间配置覆盖，因此，以注解配置为准 -->
+    <task:scheduled-tasks scheduler="scheduler">
+        <!-- 每5秒执行一次 -->
+        <task:scheduled ref="scheduleJob" method="runJob" cron="0/5 * * * * *"/>
+    </task:scheduled-tasks>
+</beans>

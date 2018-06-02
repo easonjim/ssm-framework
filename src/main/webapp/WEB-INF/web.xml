@@ -10,7 +10,7 @@
     <!-- 添加其它xml配置 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:spring/spring-base.xml,classpath*:spring/spring-mybatis.xml,classpath*:spring/spring-schedule.xml,classpath*:mybatis/mybatis-config.xml</param-value>
+        <param-value>classpath*:spring/spring-base.xml,classpath*:spring/spring-mybatis.xml,classpath*:spring/spring-task.xml,classpath*:mybatis/mybatis-config.xml</param-value>
     </context-param>
     <!-- spring的ApplicationContext 载入：spring的监听器 -->
     <listener>
