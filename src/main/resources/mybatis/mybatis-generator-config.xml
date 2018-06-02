@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="application.properties"/>
+
+    <!-- 一个数据库一个context -->
+    <context id="default">
+
+        <!-- 此处是将Example改名为Criteria -->
+        <!--<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">-->
+            <!--<property name="searchString" value="Example$"/>-->
+            <!--<property name="replaceString" value="Criteria"/>-->
+        <!--</plugin>-->
+
+        <!-- 注释 -->
+        <commentGenerator>
+            <!-- 是否取消注释 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 是否生成注释代码时间戳-->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="${datasource.driver}" 
+                        connectionURL="${datasource.url}" 
+                        userId="${datasource.username}"
+                        password="${datasource.password}"/>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal，false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- Model模型生成器
+            用来生成含有主键key的类，记录类以及查询Example类
+            targetPackage：指定生成的model生成所在的包名
+            targetProject：指定在该项目下所在的路径  
+        -->
+        <!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="com.jsoft.framework.ssm.model"
+                            targetProject="src/main/java">
+            <!-- 给Model添加一个父类 -->
+            <!--<property name="rootClass" value="com.jsoft.framework.ssm.dao.BaseDao"/>-->
+
+            <!-- 是否在当前路径下新加一层schema,eg：com.jsoft.framework.ssm.dao.[schema] -->
+            <property name="enableSubPackages" value="true"/>
+
+            <!-- 是否对model添加构造函数 -->
+            <property name="constructorBased" value="true"/>
+
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="true"/>
+
+            <!-- 建立的Model对象是否不可改变，即生成的Model对象不会有setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <!-- mapxml文件生成器 -->
+        <sqlMapGenerator targetPackage="mybatis/mapper"
+                         targetProject="src/main/resources">
+            <!-- 是否在当前路径下新加一层schema,eg：com.jsoft.framework.ssm.dao.[schema] -->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 客户端代码生成器
+            生成易于使用的针对Model对象和XML配置文件的代码
+            type="ANNOTATEDMAPPER"，生成Java Model和基于注解的Mapper对象
+            type="MIXEDMAPPER"，生成基于注解的Java Model和相应的Mapper对象
+            type="XMLMAPPER"，生成SQLMap XML文件和独立的Mapper接口
+        -->
+        <!-- 生成mapxml对应client，也就是接口dao -->
+        <javaClientGenerator targetPackage="com.jsoft.framework.ssm.dao"
+                             targetProject="src/main/java" 
+                             type="XMLMAPPER">
+            <!-- 是否在当前路径下新加一层schema,eg：com.jsoft.framework.ssm.dao.[schema] -->
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 配置表信息 -->
+        <!--<table schema="${schema}" tableName="t_user"-->
+        <!--domainObjectName="User" enableCountByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--enableUpdateByExample="false">-->
+        <!-- schema即为数据库名，这个对于上面创建的子包没什么用，忽略
+             tableName为对应的数据库表 
+             domainObjectName是要生成的实体类 
+             enable*ByExample 是否生成example类   
+        -->
+        <table schema="ssm_framework" 
+               tableName="sys_user"
+               domainObjectName="TestUser"
+               selectByPrimaryKeyQueryId="true"
+               selectByExampleQueryId="true"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableDeleteByPrimaryKey="true"
+               enableSelectByExample="true"
+               enableSelectByPrimaryKey="true"
+               enableUpdateByExample="true"
+               enableUpdateByPrimaryKey="true">
+
+            <!-- 列的命名规则：MBG使用<columnRenamingRule>元素在计算列名的对应名称之前，先对列名进行重命名
+                 作用：一般需要对BUSI_CLIENT_NO前的BUSI_进行过滤，支持正则表达式
+                 searchString：表示要被换掉的字符串
+                 replaceString：则是要换成的字符串，默认情况下为空字符串，可选 
+            -->
+            <!--<columnRenamingRule searchString="" replaceString=""/>-->
+
+            <!-- 告诉MBG忽略某一列
+                 column，需要忽略的列
+                 delimitedColumnName，true匹配column的值和数据库列的名称大小写完全匹配，false忽略大小写匹配是否限定表的列名，即固定表列在Model中的名称 
+            -->
+            <!--<ignoreColumn column="name"  delimitedColumnName="true" />-->
+
+            <!-- column，数据库中字段名
+                 property，POJO属性名
+                 javaType，POJO类型
+                 jdbcType，数据库字段类型 -->
+            <!-- 指定列的java数据类型 -->
+            <columnOverride column="user_sex" jdbcType="TINYINT" property="userSex" javaType="java.lang.Short"/>
+            <columnOverride column="is_delete" jdbcType="TINYINT" property="isDelete" javaType="java.lang.Short"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

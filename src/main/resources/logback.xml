@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    
+
+    <!-- 引入配置文件 -->
+    <property resource="application.properties"/>
+
     <!-- 控制台输出，生产级别需要去除 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -11,68 +14,178 @@
         </encoder>
     </appender>
 
+    <!-- 大类划分 -->
     <!-- 文件输出 -->
-    <appender name="daily" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover -->
-            <FileNamePattern>/usr/local/wwwweb/log/ssm-framework.%d{yyyy-MM-dd}.log</FileNamePattern>
-            <!-- keep 30 days' worth of history -->
+            <fileNamePattern>
+                ${logback.loghome}/ssm-framework.info.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
             <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1000MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
+        <file>
+            ${logback.loghome}/ssm-framework.info.log
+        </file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
         <encoder>
-            <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p --- [%t] %-40.40logger{39} : %m%n
-            </Pattern>
             <charset>UTF-8</charset>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p --- [%t] %-40.40logger{39} : %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${logback.loghome}/ssm-framework.error.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1000MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <file>
+            ${logback.loghome}/ssm-framework.error.log
+        </file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p --- [%t] %-40.40logger{39} : %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${logback.loghome}/ssm-framework.debug.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1000MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <file>
+            ${logback.loghome}/ssm-framework.debug.log
+        </file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p --- [%t] %-40.40logger{39} : %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${logback.loghome}/ssm-framework.warn.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1000MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <file>
+            ${logback.loghome}/ssm-framework.warn.log
+        </file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p --- [%t] %-40.40logger{39} : %m%n
+            </pattern>
         </encoder>
     </appender>
 
-    <appender name="servicelog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- 颗粒度最小的配置 -->
+    <appender name="service_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover -->
-            <FileNamePattern>/usr/local/wwwweb/log/ssm-framework-service.%d{yyyy-MM-dd}.log</FileNamePattern>
-            <!-- keep 30 days' worth of history -->
+            <fileNamePattern>
+                ${logback.loghome}/ssm-framework.service.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
             <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1000MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
+        <file>
+            ${logback.loghome}/ssm-framework.service.log
+        </file>
         <encoder>
-            <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p --- [%t] %-40.40logger{39} : %m%n
-            </Pattern>
             <charset>UTF-8</charset>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p --- [%t] %-40.40logger{39} : %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="dao_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${logback.loghome}/ssm-framework.dao.%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1000MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <file>
+            ${logback.loghome}/ssm-framework.dao.log
+        </file>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p --- [%t] %-40.40logger{39} : %m%n
+            </pattern>
         </encoder>
     </appender>
 
-    <appender name="daolog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover -->
-            <FileNamePattern>/usr/local/wwwweb/log/ssm-framework-dao.%d{yyyy-MM-dd}.log</FileNamePattern>
-            <!-- keep 30 days' worth of history -->
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss.SSS} -[%X{traceid}] -%5p --- [%t] %-40.40logger{39} : %m%n
-            </Pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
+    <!-- 颗粒度最小的划分 -->
     <!-- 输出SQL日志，additivity为true时向上传递，生产级别必须设置成false-->
     <logger name="com.jsoft.framework.ssm.dao" level="debug" additivity="false">
-        <appender-ref ref="daolog"/>
+        <appender-ref ref="dao_log"/>
         <appender-ref ref="stdout"/>
     </logger>
-    
     <!-- 输出Service日志，additivity为true时向上传递，生产级别必须设置成false-->
     <logger name="com.jsoft.framework.ssm.service" level="info" additivity="false">
-        <appender-ref ref="servicelog"/>
+        <appender-ref ref="service_log"/>
         <appender-ref ref="stdout"/>
     </logger>
 
-    <!-- 输出除了上面日志外的所有日志 -->
+    <!-- 大类划分 -->
+    <!-- 输出除了上面日志外的所有日志，默认分下面这几类是必须的 -->
     <root level="info">
-        <appender-ref ref="daily"/>
+        <appender-ref ref="info"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="debug"/>
+        <appender-ref ref="warn"/>
         <appender-ref ref="stdout"/>
     </root>
+
 
 </configuration>
