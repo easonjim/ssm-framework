@@ -12,7 +12,6 @@
 
     <!-- 配置包扫描 -->
     <context:component-scan base-package="com.jsoft.framework.ssm.task" />
-    <context:annotation-config/>
 
     <!-- 配置任务执行器，注意：此处定义了线程池进行处理，因此所有的任务在指定的时间内都是异步的，如果要做成同步的，则把线程池去掉 -->
     <task:executor id="executor" keep-alive="7200" pool-size="100-200" queue-capacity="500" rejection-policy="CALLER_RUNS" />
