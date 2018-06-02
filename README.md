@@ -22,3 +22,19 @@ MyBatis采用Maven原生生成方式，统一的配置文件放置在resources/m
 dao：生成放在根目录，后续可根据需求按模块划分文件夹  
 model：pojo生成放在根目录，后续可根据需求按模块划分文件夹  
 划分文件夹的好处：后续生成的文件可以不用覆盖，而是拷贝对应更新的部分，也不用划分专门的生成文件夹进行管理  
+## 多环节打包处理
+针对多环节，从源头打包入手，当然这些都可以在运维阶段用交换进行替换来代替  
+resources/environment/下有四个环境，local本地、dev开发、test测试、pre预上线、prod生产，打包命令如下：  
+```shell
+    # 本地
+    mvn clean package -P local
+    # 开发
+    mvn clean package -P dev
+    # 测试
+    mvn clean package -P test
+    # 预上线
+    mvn clean package -P pre
+    # 生产
+    mvn clean package -p prod
+```
+说明：每个环境的文件夹下的配置文件可以全量放，也可以试增量，最终会覆盖
