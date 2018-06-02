@@ -12,7 +12,7 @@ SSM脚手架
 - 当天日志不写日期，其余日志按天划分并压缩
 - 每天日志操作1G自动压缩
 - 默认保存30天
-### MyBatis代码生成
+## MyBatis代码生成
 MyBatis采用Maven原生生成方式，统一的配置文件放置在resources/mybatis/mybatis-generator-config.xml，生成命令如下：  
 ```shell
     mvn mybatis-generator:generate
