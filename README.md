@@ -37,4 +37,4 @@ resources/environment/下有四个环境，local本地、dev开发、test测试�
     # 生产
     mvn clean package -p prod
 ```
-说明：每个环境的文件夹下的配置文件可以全量放，也可以试增量，最终会覆盖
+说明：每个环境的文件夹下的配置文件可以全量放，也可以是增量，最终会覆盖
