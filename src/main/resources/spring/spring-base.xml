@@ -12,4 +12,8 @@
     <!-- 配置包扫描 -->
     <context:component-scan base-package="com.jsoft.framework.ssm.service"/>
     <context:annotation-config/>
+    
+    <!-- 采用import方式引入配置文件 -->
+    <import resource="classpath:spring/spring-mybatis.xml"/>
+    <import resource="classpath:spring/spring-task.xml"/>
 </beans>

@@ -60,3 +60,6 @@ mvn clean package -p prod
 使用：
 - 大小写不强烈要求，比如：DO可以是大写，也可以是小写Do
 - 各实体间可以使用继承去实现，目的是各实体字段都相同时可以减少代码量，比如：model/sys/user下的实现
+## Spring配置文件
+配置文件采用import方式引入，入口为spring/spring-base.xml  
+好处：每次新建配置文件只需要管理这个入口即可，而无需关心web.xml配置，让web.xml专心服务于web  
