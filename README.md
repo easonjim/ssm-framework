@@ -63,3 +63,6 @@ mvn clean package -p prod
 ## Spring配置文件
 配置文件采用import方式引入，入口为spring/spring-base.xml  
 好处：每次新建配置文件只需要管理这个入口即可，而无需关心web.xml配置，让web.xml专心服务于web  
+## 单元测试
+用的最多的是Dao和Service的单元测试，其余测试可以参考MockMVC  
+在test/resources文件夹下的文件文件名相同会覆盖main/resources  
