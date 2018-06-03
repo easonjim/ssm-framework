@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jsoft.framework.ssm.model.sys.user.UserDO;
 import com.jsoft.framework.ssm.model.sys.user2.User;
+import com.jsoft.framework.ssm.model.sys.user2.UserExample;
 
 /**
  * IUserService
@@ -99,4 +100,10 @@ public interface UserService {
      * @return UserDO
      */
     User getUser2(Long id);
+    
+    // 以下方法服务于列表，采用注解的方式实现，Mapper采用MyBatis自动生成
+    int insertUser(User user);
+    int deleteByExample(UserExample example);
+    int updateByPrimaryKeySelective(User user);
+    List<User> getAllUserByExample(UserExample example);
 }

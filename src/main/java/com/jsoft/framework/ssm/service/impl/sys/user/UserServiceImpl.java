@@ -8,6 +8,7 @@ import com.github.pagehelper.PageHelper;
 import com.jsoft.framework.ssm.dao.sys.user.UserMapper;
 import com.jsoft.framework.ssm.model.sys.user.UserDO;
 import com.jsoft.framework.ssm.model.sys.user2.User;
+import com.jsoft.framework.ssm.model.sys.user2.UserExample;
 import com.jsoft.framework.ssm.service.sys.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -155,5 +156,23 @@ public class UserServiceImpl implements UserService {
     public User getUser2(Long id) {
         log.info("调用Service方法：{},id:{}", "UserServiceImpl#getUser2", id);
         return userMapper2.selectByPrimaryKey(id);
+    }
+
+    // 以下方法服务于列表，采用注解的方式实现，Mapper采用MyBatis自动生成
+    @Override
+    public int insertUser(User user) {
+        return userMapper2.insertSelective(user);
+    }
+    @Override
+    public int deleteByExample(UserExample example) {
+        return userMapper2.deleteByExample(example);
+    }
+    @Override
+    public int updateByPrimaryKeySelective(User user) {
+        return userMapper2.updateByPrimaryKeySelective(user);
+    }
+    @Override
+    public List<User> getAllUserByExample(UserExample example) {
+        return userMapper2.selectByExample(example);
     }
 }
