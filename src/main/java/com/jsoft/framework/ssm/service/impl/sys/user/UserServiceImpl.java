@@ -2,9 +2,12 @@ package com.jsoft.framework.ssm.service.impl.sys.user;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import com.github.pagehelper.PageHelper;
 import com.jsoft.framework.ssm.dao.sys.user.UserMapper;
 import com.jsoft.framework.ssm.model.sys.user.UserDO;
+import com.jsoft.framework.ssm.model.sys.user2.User;
 import com.jsoft.framework.ssm.service.sys.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Resource(name = "userMapper2")
+    private com.jsoft.framework.ssm.dao.sys.user2.UserMapper userMapper2;
 
     /**
      * 获取一个用户
@@ -138,5 +143,17 @@ public class UserServiceImpl implements UserService {
         log.info("调用Service方法：{},userName:{}", "UserServiceImpl#listUserByPage3", userName);
         PageHelper.startPage(pageNum, pageSize, orderBy);
         return userMapper.listUserByPage3(userName);
+    }
+
+    /**
+     * 基于注解方式实现获取一个用户
+     *
+     * @param id 主键ID
+     * @return UserDO
+     */
+    @Override
+    public User getUser2(Long id) {
+        log.info("调用Service方法：{},id:{}", "UserServiceImpl#getUser2", id);
+        return userMapper2.selectByPrimaryKey(id);
     }
 }

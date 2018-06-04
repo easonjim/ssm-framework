@@ -3,6 +3,7 @@ package com.jsoft.framework.ssm.service.sys.user;
 import java.util.List;
 
 import com.jsoft.framework.ssm.model.sys.user.UserDO;
+import com.jsoft.framework.ssm.model.sys.user2.User;
 
 /**
  * IUserService
@@ -90,4 +91,12 @@ public interface UserService {
      * @return List#UserDO
      */
     List<UserDO> listUserByPage3(String userName, int pageNum, int pageSize, String orderBy);
+
+    /**
+     * 基于注解方式实现获取一个用户
+     *
+     * @param id 主键ID
+     * @return UserDO
+     */
+    User getUser2(Long id);
 }

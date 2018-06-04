@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.jsoft.framework.ssm.model.sys.user.UserDO;
+import com.jsoft.framework.ssm.model.sys.user2.User;
 import com.jsoft.framework.ssm.service.sys.user.UserService;
 
 import org.slf4j.Logger;
@@ -62,6 +63,10 @@ public class IndexController {
             logger.info("新增用户：{}", userDO.getId());
             UserDO user = userService.getUser(userDO.getId());
             logger.info("获取一个用户：{}", user);
+            
+            User tmpUser = userService.getUser2(userDO.getId());
+            logger.info("基于注解方式获取一个用户:{}", tmpUser);
+            
             user.setUserPwd("654321");
             Boolean updateUser = userService.updateUser(user);
             UserDO user1 = userService.getUser(userDO.getId());

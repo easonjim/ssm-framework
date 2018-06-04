@@ -22,6 +22,17 @@ mvn -Dmybatis.generator.overwrite=true -Dmybatis.generator.configurationFile=res
 dao：生成放在根目录，后续可根据需求按模块划分文件夹  
 model：pojo生成放在根目录，后续可根据需求按模块划分文件夹  
 划分文件夹的好处：后续生成的文件可以不用覆盖，而是拷贝对应更新的部分，也不用划分专门的生成文件夹进行管理  
+MyBatis注解方式的使用放在dao/sys/user2的包下，此文件是通过代码生成器生成，但不建议使用注解方式！  
+## 基于PageHelper的MyBatis分页组件使用
+使用此组件可以减少在XML配置上手写分页参数limit，默认只在dao层写这几个参数即可实现分页：
+```java
+@Param("start") int pageNum, @Param("limit") int pageSize, @Param("order") String orderBy
+```
+如果要纯手写分页，需要避开上面的特定参数，比如：
+```java
+@Param("pageNum") int pageNum, @Param("pageSize") int pageSize
+```
+注意：对于分页的条件查询需要手动实现，比如where后面的条件
 ## 多环节打包处理
 针对多环节，从源头打包入手，当然这些都可以在运维阶段用脚本进行替换来代替  
 resources/environment/下有四个环境，local本地、dev开发、test测试、pre预上线、prod生产，打包命令如下：  
@@ -37,4 +48,15 @@ mvn clean package -P pre
 # 生产
 mvn clean package -p prod
 ```
-说明：每个环境的文件夹下的配置文件可以全量放，也可以是增量，最终会覆盖
+说明：每个环境的文件夹下的配置文件可以全量放，也可以是增量，最终会覆盖  
+## 实体
+放在model文件夹下，可以按业务分模块分文件夹，也可以不分  
+实体分类：
+- 数据对象： xxxDO， xxx 即为数据表名。
+- 数据传输对象： xxxDTO， xxx 为业务领域相关的名称。
+- 展示对象： xxxVO， xxx 一般为网页名称。
+- POJO 是 DO/DTO/BO/VO 的统称，禁止命名成 xxxPOJO。
+
+使用：
+- 大小写不强烈要求，比如：DO可以是大写，也可以是小写Do
+- 各实体间可以使用继承去实现，目的是各实体字段都相同时可以减少代码量，比如：model/sys/user下的实现
