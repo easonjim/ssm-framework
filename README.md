@@ -33,7 +33,7 @@ MyBatis注解方式的使用放在dao/sys/user2的包下，此文件是通过代
 @Param("pageNum") int pageNum, @Param("pageSize") int pageSize
 ```
 注意：对于分页的条件查询需要手动实现，比如where后面的条件
-## 多环节打包处理
+## 多环境打包处理
 针对多环节，从源头打包入手，当然这些都可以在运维阶段用脚本进行替换来代替  
 resources/environment/下有四个环境，local本地、dev开发、test测试、pre预上线、prod生产，打包命令如下：  
 ```shell
@@ -52,10 +52,10 @@ mvn clean package -p prod
 ## 实体
 放在model文件夹下，可以按业务分模块分文件夹，也可以不分  
 实体分类：
-- 数据对象： xxxDO， xxx 即为数据表名。
-- 数据传输对象： xxxDTO， xxx 为业务领域相关的名称。
-- 展示对象： xxxVO， xxx 一般为网页名称。
-- POJO 是 DO/DTO/BO/VO 的统称，禁止命名成 xxxPOJO。
+- 数据对象：xxxDO，xxx即为数据表名
+- 数据传输对象：xxxDTO，xxx为业务领域相关的名称
+- 展示对象：xxxVO，xxx一般为网页名称
+- POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO
 
 使用：
 - 大小写不强烈要求，比如：DO可以是大写，也可以是小写Do
